@@ -77,4 +77,23 @@ public class RoomOccupancyServiceTests {
         assertEquals(1153, actual.revenuePremium());
         assertEquals(45, actual.revenueEconomy());
     }
+
+    /**
+     * Added this unit test, because I can imagine wrongly implement algorithm when economy guest is upgraded to
+     * premium when premium room is available and all economy guests are assigned to economy rooms. Wrong algorithm
+     * can return usagePremium 7 and usageEconomy 3.
+     */
+    @Test
+    public void shouldProperlyCalculateWhenEconomyRoomsEqualToEconomyGuests() {
+        int freePremiumRooms = 10;
+        int freeEconomyRooms = 4;
+
+        RoomOccupancyResult actual = roomOccupancyService.calculate(new RoomOccupancyModel(
+                freePremiumRooms, freeEconomyRooms, potentialGuests));
+
+        assertEquals(6, actual.usagePremium());
+        assertEquals(4, actual.usageEconomy());
+        assertEquals(1054, actual.revenuePremium());
+        assertEquals(189, actual.revenueEconomy());
+    }
 }
