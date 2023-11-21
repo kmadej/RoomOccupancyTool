@@ -8,6 +8,8 @@ import com.smarthost.roomoccupancytool.service.RoomOccupancyService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.util.stream.IntStream;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class RoomOccupancyServiceTests {
@@ -95,5 +97,33 @@ public class RoomOccupancyServiceTests {
         assertEquals(4, actual.usageEconomy());
         assertEquals(1054, actual.revenuePremium());
         assertEquals(189, actual.revenueEconomy());
+    }
+
+    @Test
+    public void shouldNotThrownExceptionWhenNoPremiumGuestsIncluded() {
+        int freePremiumRooms = 10;
+        int freeEconomyRooms = 4;
+
+        RoomOccupancyResult actual = roomOccupancyService.calculate(new RoomOccupancyModel(
+                freePremiumRooms, freeEconomyRooms, IntStream.of(10, 20, 30).toArray()));
+
+        assertEquals(0, actual.usagePremium());
+        assertEquals(3, actual.usageEconomy());
+        assertEquals(0, actual.revenuePremium());
+        assertEquals(60, actual.revenueEconomy());
+    }
+
+    @Test
+    public void shouldNotThrownExceptionWhenNoEconomyGuestsIncluded() {
+        int freePremiumRooms = 10;
+        int freeEconomyRooms = 4;
+
+        RoomOccupancyResult actual = roomOccupancyService.calculate(new RoomOccupancyModel(
+                freePremiumRooms, freeEconomyRooms, IntStream.of(299, 102).toArray()));
+
+        assertEquals(2, actual.usagePremium());
+        assertEquals(0, actual.usageEconomy());
+        assertEquals(401, actual.revenuePremium());
+        assertEquals(0, actual.revenueEconomy());
     }
 }

@@ -14,10 +14,18 @@ public class RoomOccupancyController {
 
     private final RoomOccupancyService roomOccupancyService;
 
+    /**
+     * Gets optimise result how to split free rooms into potential guests and count revenue.
+     *
+     * @param freePremiumRooms number of free premium rooms in hotel
+     * @param freeEconomyRooms number of free economy rooms in hotel
+     * @param potentialGuests array of potential guests represented by money they can pay for room
+     * @return result containing economy and premium usage rooms with revenue
+     */
     @GetMapping("/roomOccupancy")
-    public RoomOccupancyResult getRoomOccupancy(@RequestParam int freePremiumRooms,
-                                                @RequestParam int freeEconomyRooms,
-                                                @RequestParam int[] potentialGuests) {
+    public RoomOccupancyResult getRoomOccupancy(@RequestParam final int freePremiumRooms,
+                                                @RequestParam final int freeEconomyRooms,
+                                                @RequestParam final int[] potentialGuests) {
         return roomOccupancyService.calculate(
                 new RoomOccupancyModel(freePremiumRooms, freeEconomyRooms, potentialGuests));
     }
