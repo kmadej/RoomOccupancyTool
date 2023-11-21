@@ -3,7 +3,7 @@ To compile and build jar file please use the following commands:
 ```mvn compile```  
 ```mvn package```  
 
-To run application please use jar file. You can generate it by yourself or using already provided jar file. To run application please type:  
+To run application please use jar file. You can generate it by yourself or using already provided jar file. Application use Java 21. To run application please type:  
 ```java -jar RoomOccupancyTool-0.0.1-SNAPSHOT.jar```  
 
 By default application runs on http://localhost:8080/      
@@ -20,7 +20,7 @@ int freePremiumRooms,
 int freeEconomyRooms,  
 int[] potentialGuests  
 
-Example request: ```http://localhost:8080/roomOccupancy?freePremiumRooms=5&freeEconomyRooms=6&potentialGuests=100,90,250```  
+Example request: http://localhost:8080/roomOccupancy?freePremiumRooms=5&freeEconomyRooms=6&potentialGuests=100,90,250  
 Example response: ```{"usagePremium":2,"usageEconomy":1,"revenuePremium":350,"revenueEconomy":90}```  
 
 Of course, you can use postman to send request. Application use basic authentication.
